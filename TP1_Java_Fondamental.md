@@ -23,6 +23,7 @@ Lancez `./gradlew run` : le programme s'arrête sur le premier `TODO`. Remplacez
     ```java
     public Book(String isbn, String title, String author, int year)
     ```
+    Mettez ensuite `Main` à jour avec les ISBN : `9780132350884` (Clean Code) et `9780134685991` (Effective Java).
 -   Refuser un ISBN ou un titre `null` ou vide (`IllegalArgumentException`)
 -   Ajouter et supprimer des livres
 -   Rechercher par titre, par auteur et par ISBN
@@ -38,6 +39,7 @@ La classe `Library` doit exposer au minimum ces méthodes (elles seront utilisé
 | `Book findByIsbn(String isbn)` | recherche par ISBN |
 | `Book findBookByTitle(String title)` | recherche par titre |
 | `List<Book> findByAuthor(String author)` | tous les livres d'un auteur |
+| `boolean containsIsbn(String isbn)` | l'ISBN est-il présent ? |
 | `int size()` | nombre de livres |
 | `void displayBooks()` | affiche tous les livres |
 

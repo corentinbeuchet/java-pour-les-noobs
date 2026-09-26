@@ -34,7 +34,6 @@ dependencies {
 docker run -d --name library-db -e POSTGRES_DB=library_db -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:18
 ```
 
--   N'hésitez pas à regarder le projet [test-driven-development](https://github.com/corentinbeuchet/test-driven-development) et à vous inspirer de son code.
 
 ## 3. Code de départ
 
@@ -88,7 +87,22 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 ### Contraintes techniques
 
 -   Utiliser Spring Data JPA pour accéder aux données
--   Tests d'intégration sur une vraie base grâce à Testcontainers (`@ServiceConnection`, image `postgres:18`), comme dans le projet [test-driven-development](https://github.com/corentinbeuchet/test-driven-development)
+-   Tests d'intégration sur une vraie base grâce à Testcontainers : Docker démarre un PostgreSQL 18 jetable pour les tests. Créez `src/test/java/fr/library/TestcontainersConfiguration.java` :
+
+```java
+@TestConfiguration(proxyBeanMethods = false)
+class TestcontainersConfiguration {
+
+    @Bean
+    @ServiceConnection
+    PostgreSQLContainer postgresContainer() {
+        // Version fixée (et non "latest") : les tests ne changent pas de comportement du jour au lendemain
+        return new PostgreSQLContainer(DockerImageName.parse("postgres:18"));
+    }
+}
+```
+
+   puis annotez vos tests d'intégration avec `@SpringBootTest`, `@AutoConfigureMockMvc` (package `org.springframework.boot.webmvc.test.autoconfigure`) et `@Import(TestcontainersConfiguration.class)`. `PostgreSQLContainer` est dans `org.testcontainers.postgresql` (Testcontainers 2).
 -   Ne jamais committer de vrai mot de passe : le mot de passe de la base est lu dans la variable d'environnement `DB_PASSWORD`
 
 ## ✅ Terminé quand…

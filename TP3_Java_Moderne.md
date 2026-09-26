@@ -22,12 +22,13 @@ public Book findBookByTitle(String title) {
 
 -   Retourner la liste des livres triée par titre : `List<Book> booksSortedByTitle()`
 -   Retourner la liste des livres triée par auteur, puis par titre : `List<Book> booksSortedByAuthor()`
+-   Retourner la liste des livres triée par ISBN : `List<Book> booksSortedByIsbn()` (elle servira au TP 4)
 -   Utiliser `sorted(...)` avec un [`Comparator`](https://www.baeldung.com/java-comparator-comparable) : `Comparator.comparing(Book::getAuthor).thenComparing(Book::getTitle)`
 -   Terminer vos Streams par `.toList()` (liste non modifiable) plutôt que `collect(Collectors.toList())`
 
 ## 2. `record`, `sealed interface` et `switch`
 
-Au lieu d'écrire une méthode par type de recherche, on veut **une seule** méthode `search`. Créez les critères de recherche :
+Au lieu d'écrire une méthode par type de recherche, on veut **une seule** méthode `search`. Créez les critères de recherche (**un fichier par type**) :
 
 ``` java
 public sealed interface SearchCriteria permits ByTitle, ByAuthor, ByYearRange {
@@ -52,13 +53,13 @@ public List<Book> search(SearchCriteria criteria) {
 }
 ```
 
-> Le `switch` n'a pas besoin de `default` : l'interface est `sealed`, le compilateur sait que tous les cas sont traités. Ajoutez un quatrième critère sans le traiter : que se passe-t-il ?
+> Le `switch` n'a pas besoin de `default` : l'interface est `sealed`, le compilateur sait que tous les cas sont traités. Ajoutez un quatrième record à la clause `permits` sans le traiter dans le `switch` : que se passe-t-il ?
 
 ## Contraintes techniques
 
 -   Tests unitaires pour les méthodes de tri (dont une bibliothèque vide et deux livres de même titre)
 -   Un test par critère de recherche (un test paramétré avec `@MethodSource` est bienvenu)
--   La recherche par titre ne tient pas compte de la casse
+-   `search(new ByTitle(...))` ne tient pas compte de la casse (`equalsIgnoreCase`)
 
 ## Bonus
 

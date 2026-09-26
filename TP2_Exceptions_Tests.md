@@ -89,7 +89,7 @@ jobs:
 
 -   Bloquer le merge si la CI ne passe pas : ajoutez le check `test` (le nom du job) aux règles de protection de `main`
 
-> ⚠️ Sous Windows, le fichier `gradlew` peut perdre son droit d'exécution et la CI échoue avec `Permission denied`. Corrigez-le avec `git update-index --chmod=+x gradlew`, puis commitez.
+> ⚠️ Si la CI échoue avec `./gradlew: Permission denied` (fréquent quand le fichier a été commité depuis Windows), `gradlew` a perdu son droit d'exécution. Corrigez-le avec `git update-index --chmod=+x gradlew`, puis commitez.
 
 ## ✅ Terminé quand…
 
