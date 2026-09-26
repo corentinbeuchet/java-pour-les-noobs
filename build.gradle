@@ -1,0 +1,24 @@
+plugins {
+    id 'application'
+}
+
+group = 'fr.library'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // TP2 : ajouter JUnit 6 ici
+}
+
+application {
+    mainClass = 'fr.library.Main'
+}
