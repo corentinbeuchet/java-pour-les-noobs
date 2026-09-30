@@ -59,6 +59,7 @@ public class BookController {
 ### Contraintes techniques
 
 -   Transformer les exceptions métier en codes HTTP avec `@RestControllerAdvice` + `@ExceptionHandler`
+-   Renvoyer les erreurs au format `ProblemDetail` : `{ "status": 409, "detail": "Livre déjà présent : 978…" }` (le message de votre exception), avec `ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage())`. C'est le contrat qu'attend le front Angular ([angular-pour-les-noobs](https://github.com/corentinbeuchet/angular-pour-les-noobs), TP 4) : il affiche le champ `detail`.
 -   Tests d'intégration pour les 3 endpoints, cas d'erreur compris, avec `@WebMvcTest` + `MockMvc` :
     -   dépendance `testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'`
     -   depuis Spring Boot 4, `@WebMvcTest` est dans le package `org.springframework.boot.webmvc.test.autoconfigure`
